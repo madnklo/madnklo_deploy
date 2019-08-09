@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$1" = "--docker_build" ]
+then
+	docker build --tag=mnk_test ./docker_src
+	exit
+fi
+
+if [ "$1"="--set_persistent" ] && [[ ! -z "$2"  ]]
+then
+	echo "This command must be sourced to have an effect"
+	export DOCKER_MG5_PERSISTENT="$2"
+	exit
+fi
+
+if [ -z "$DOCKER_MG5_PERSISTENT" ]
+then
+	echo "The DOCKER_MG5_PERSISTENT variable is not set."
+	echo "Setting the current folder"
+	echo "You can set it by running"
+	echo "$>source docker_mg5.sh --set_persistent PATH"
+fi
+	
+docker run -it --rm -v $DOCKER_MG5_PERSISTENT:/var/mg5_persistent mnk_test $1
