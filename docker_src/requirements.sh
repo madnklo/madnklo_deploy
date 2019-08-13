@@ -9,7 +9,6 @@ if [ "$1" = "apt-get-build" ]
 then echo "
 wget
 ca-certificates
-python
 gfortran
 build-essential
 ghostscript
@@ -24,7 +23,6 @@ if [ "$1" = "apt-get-run" ]
 #Write the list of apt-get packages to install 
 then echo "
 ca-certificates
-python
 gfortran
 build-essential
 ghostscript

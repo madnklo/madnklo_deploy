@@ -2,7 +2,7 @@
 
 if [ "$1" = "--docker_build" ]
 then
-	docker build --tag=mnk_test ./docker_src
+	docker build --tag=ndeutschmann/madnklo ./docker_src
 	exit
 fi
 
@@ -21,4 +21,4 @@ then
 	echo "$>source docker_mg5.sh --set_persistent PATH"
 fi
 	
-docker run -it --rm -v $DOCKER_MG5_PERSISTENT:/var/mg5_persistent mnk_test $1
+docker run -it --rm -v $DOCKER_MG5_PERSISTENT:/var/mg5_persistent ndeutschmann/madnklo $1
