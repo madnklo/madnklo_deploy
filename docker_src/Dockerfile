@@ -31,6 +31,6 @@ RUN /bin/bash /home/hep/requirements.sh pip
 
 COPY --from=builder /home/hep/madnklo /home/hep/madnklo
 
-WORKDIR /var/mg5_persistent
+WORKDIR /var/madnklo_persistent
 ENTRYPOINT ["/home/hep/madnklo/bin/mg5_aMC"]
 CMD []
