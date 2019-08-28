@@ -3,12 +3,13 @@ FROM python:2 as builder
 USER root
 
 WORKDIR /home/hep
-ADD requirements.sh /home/hep/requirements.sh
+ADD requirements_apt_build.sh /home/hep/requirements_apt_build.sh
 RUN apt-get -y update
 
-RUN apt-get -y install $(/bin/bash /home/hep/requirements.sh apt-get-build)
+RUN apt-get -y install $(cat /home/hep/requirements_apt_build.sh)
 
-RUN /bin/bash /home/hep/requirements.sh pip
+ADD requirements_pip.sh /home/hep/requirements_pip.sh
+RUN /bin/bash /home/hep/requirements_pip.sh
 
 RUN git clone --depth 1 -b master https://github.com/madnklo/madnklo.git
 
@@ -24,25 +25,35 @@ WORKDIR /home/hep
 ADD install_lhapdf_6.2.3.sh /home/hep/install_lhapdf.sh
 RUN /home/hep/install_lhapdf.sh
 
+##################################################################
+
 FROM python:2 as runner
 
 WORKDIR /home/hep
-ADD requirements.sh /home/hep/requirements.sh
-RUN apt-get -y update
-RUN apt-get -y install $(/bin/bash /home/hep/requirements.sh apt-get-run)
 
-RUN /bin/bash /home/hep/requirements.sh pip
+ADD requirements_apt_run.sh /home/hep/requirements_apt_run.sh
+RUN apt-get -y update
+RUN apt-get -y install $(cat /home/hep/requirements_apt_run.sh)
+
+ADD requirements_pip.sh /home/hep/requirements_pip.sh
+RUN /bin/bash /home/hep/requirements_pip.sh
+
+RUN mkdir -p /root/.config/matplotlib
+RUN echo "backend: agg" >>  ~/.config/matplotlib/matplotlibrc
 
 ENV PATH="/home/hep/lhapdf/bin:${PATH}"
 ENV LD_LIBRARY_PATH="/home/hep/lhapdf/lib:${LD_LIBRARY_PATH}"
 ENV PYTHONPATH="/home/hep/lhapdf/lib/python2.7/site-packages/:${PYTHONPATH}"
 
-COPY --from=builder /home/hep/madnklo /home/hep/madnklo
-COPY --from=builder /home/hep/lhapdf /home/hep/lhapdf
+COPY --from=builder /home/hep/ /home/hep/
 
-RUN mkdir -p /root/.config/matplotlib
-RUN echo "backend: agg" >>  ~/.config/matplotlib/matplotlibrc
 RUN lhapdf install PDF4LHC15_nlo_30
+
+WORKDIR /var/tmp
+ADD texlive.profile /var/tmp/texlive.profile
+ADD install_texlive.sh /var/tmp/install_texlive.sh
+RUN bash install_texlive.sh
+ENV PATH="/usr/local/texlive/2019/bin/x86_64-linux/:${PATH}"
 
 WORKDIR /var/madnklo_persistent
 ENTRYPOINT ["/home/hep/madnklo/bin/mg5_aMC"]
