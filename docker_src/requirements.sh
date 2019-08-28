@@ -26,7 +26,11 @@ ca-certificates
 gfortran
 build-essential
 ghostscript
-libginac6"
+libginac6
+emacs
+vim
+less
+texlive-base"
 fi
 
 ################## 
@@ -36,7 +40,7 @@ fi
 if [ "$1" = "pip" ]
 #Write the list of apt-get packages to install 
 then 
-	reqs="numpy bidict vegas mpmath"
+	reqs="numpy bidict vegas mpmath pyjet matplotlib"
 	for req in $reqs
 		do
 			pip install $req
