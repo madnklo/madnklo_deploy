@@ -3,6 +3,16 @@
 if [ "$1" = "--docker_build" ]
 then
 	docker build --tag=ndeutschmann/madnklo ./docker_src
+	echo ""
+	echo "================================================================"
+	echo "   New image built. Consider pruning/removing dangling images"
+	echo "================================================================"	
+	exit
+fi
+
+if [ "$1" = "--docker_update" ]
+then
+	docker pull ndeutschmann/madnklo
 	exit
 fi
 
