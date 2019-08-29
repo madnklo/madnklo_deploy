@@ -6,5 +6,4 @@ libginac6
 emacs
 vim
 less
-texlive-base
 dvipng
