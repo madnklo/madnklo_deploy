@@ -12,7 +12,7 @@ run the `madnklo_docker.sh` command provided in this repository in your desired 
 - [Docker](https://www.docker.com/)
 
 ### Install
-- run `git clone https://github.com/ndeutschmann/madnklo_docker.git`
+- run `git clone https://github.com/madnklo/madnklo_deploy.git`
 
 ### Setting up the system
 - ensure the Docker is running
