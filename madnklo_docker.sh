@@ -2,7 +2,7 @@
 
 if [ "$1" = "--docker_build" ]
 then
-	docker build --tag=ndeutschmann/madnklo ./docker_src
+	docker build --tag=madnklo/madnklo ./docker_src
 	echo ""
 	echo "================================================================"
 	echo "   New image built. Consider pruning/removing dangling images"
@@ -12,7 +12,7 @@ fi
 
 if [ "$1" = "--docker_update" ]
 then
-	docker pull ndeutschmann/madnklo
+	docker pull madnklo/madnklo
 	exit
 fi
 
@@ -20,10 +20,9 @@ if [ -z "$DOCKER_MNK_PERSISTENT" ]
 then
 	echo ""
 	echo "The DOCKER_MNK_PERSISTENT variable is not set."
-	echo "Setting the working directory as output path. You can choose another directory by running:"
 	DOCKER_MNK_PERSISTENT=$(pwd)
-	read -p -t 15 "Press enter to continue using the active directory as output directory (15s)
+	read -t 15 -p "Press enter to continue using the active directory as output directory (15s)
 > [Press Enter to continue]"
 fi
 	
-docker run -it --rm -v $DOCKER_MNK_PERSISTENT:/var/madnklo_persistent ndeutschmann/madnklo $1
+docker run -it --rm -v $DOCKER_MNK_PERSISTENT:/var/madnklo_persistent madnklo/madnklo $1
