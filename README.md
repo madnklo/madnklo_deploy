@@ -1,4 +1,4 @@
-# MadNkLO docker image: `madnklo_docker`
+# MadNkLO docker image: `madnklo_deploy`
 This is a first attempt at providing a Docker image for the python branch of [MadNkLO](https://github.com/madnklo/madnklo).
 The docker image itself is `madnklo/madnklo` and is available on the Docker hub.
 
