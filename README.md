@@ -37,13 +37,13 @@ Any arguments `[args]` provided which are NOT `--set_persistent` or `--docker_bu
 - The entrypoint is `/home/hep/madnklo/bin/mg5_aMC`
 - The default working directory is `/var/madnklo_persistent` which is the expected volume mountpoint to be shared with the host
 
-To inspect the system you can run `docker run -it --entrypoint /bin/bash --rm ndeutschmann/madnklo`
+To inspect the system you can run `docker run -it --entrypoint /bin/bash --rm madnklo/madnklo`
 
 #### Run script
 
 The run script `madklo_docker.sh` provided with this repository has the default command
 
-`docker run -it --rm -v $DOCKER_MNK_PERSISTENT:/var/madnklo_persistent ndeutschmann/madnklo $1`
+`docker run -it --rm -v $DOCKER_MNK_PERSISTENT:/var/madnklo_persistent madnklo/madnklo $1`
 
 which mounts $DOCKER_MNK_PERSISTENT (if undefined, uses the current host workdir) on the host to the default workdir `/var/madnklo_persistent`. 
 If a command is provided for the executable this is where it should be placed and MadNkLO outputs processes here.
